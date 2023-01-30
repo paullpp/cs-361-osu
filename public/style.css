@@ -1,0 +1,147 @@
+body {
+	font-family: Roboto, Helvetica, sans-serif;
+	margin: 0;
+	background-color: #eee;
+}
+
+.navbar {
+    background-color: rgba(36, 36, 36, 0.992);
+    /* font-size: 15px; */
+    line-height: 40px;
+}
+
+.hidden {
+    display: none;
+}
+
+.navlist {
+    margin: 0 0 0 20px;
+    padding: 0;
+    list-style-type: none;
+}
+  
+.navitem {
+    display: inline-block;
+}
+
+.nav {
+    display: inline-block;
+}
+
+.site-name {
+    color:rgb(255, 255, 255);
+    margin-left: 20px;
+    /* float: left; */
+}
+
+#login{
+    color: #4419df;
+    margin-left: -5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button{
+    float: right;
+    margin-right: 5px;
+    padding: 0;
+    line-height: 38px;
+}
+
+.window-contents {
+    width: auto;
+    max-width: 600px;
+    min-width: 350px;
+    min-height: 300px;
+    margin: 40px auto;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.window-header {
+    position: relative;
+    padding: 10px 20px;
+}
+  
+.window-header h3 {
+    margin: 0;
+    font-size: 28px;
+}
+
+#window-close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+#login-window {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1010;
+    margin-top: 130px;
+    overflow: scroll;
+}
+
+.window-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.window-body {
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.input input {
+  flex: 6 200px;
+  margin-top: 20px;
+  margin-left: 30px;
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #aaa;
+}
+
+.window-lower {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px 20px 10px;
+}
+  
+.window-lower button {
+    font-size: 20px;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.input label {
+    font-weight: 600;
+    flex: 1 75px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin: 10px 0;
+}
