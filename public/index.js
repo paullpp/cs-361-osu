@@ -15,8 +15,31 @@ var content = document.getElementById("content");
 var default_view = document.getElementById("default_view");
 //var content_view = document.getElementById("content_view");
 var content_parent = document.getElementById("content");
+var login_list = document.getElementsByClassName("login-button");
 
 // functions 
+
+function change_to_logout() {
+    login_button.remove();
+    var logout = document.createElement('button');
+    login_list[0].appendChild(logout);
+    logout.textContent = 'Log Out';
+    logout.setAttribute('id', 'login');
+    logout.setAttribute('type', 'button');
+
+    login_button = document.getElementById("login");
+}
+
+function change_to_login() {
+    login_button.remove();
+    var login = document.createElement('button');
+    login_list[0].appendChild(login);
+    login.textContent = 'Log In';
+    login.setAttribute('id', 'login');
+    login.setAttribute('type', 'button');
+
+    login_button = document.getElementById("login");
+}
 
 function add_content() {
     var new_content = document.createElement('div');
@@ -30,7 +53,9 @@ function add_content() {
 
 function remove_content() {
     content_parent.style.display = 'none';
-    content_view.remove()
+    content_view.remove();
+
+    user = '';
 }
 
 function hide_window() {
@@ -48,6 +73,7 @@ function login_true() {
     login_button.value = "Log Out";
 
     add_content();
+    change_to_logout();
 }
 
 function login_false() {
@@ -56,6 +82,7 @@ function login_false() {
     default_view.style.display = 'block';
 
     remove_content();
+    change_to_login();
 }
 
 // event listeners
@@ -64,7 +91,7 @@ window.addEventListener('load', function() {
     default_view.style.display = 'block';
 })
 
-login_button.addEventListener('click', function() {
+login_list[0].addEventListener('click', function() {
     if (logged_in == 1) {
         login_false();
     }
