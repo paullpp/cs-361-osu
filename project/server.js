@@ -9,9 +9,6 @@ const {
   getAllLifts
 } = require('./models/meetdata')
 
-
-
-
 var app = express()
 var port = process.env.PORT || 8000
 
