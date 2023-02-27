@@ -1,10 +1,9 @@
-// Imports
-//import { getAllLifts } from '../models/meetdata.js';
-
 // global varialbe declarations
 var logged_in = 0;
 var user = '';
 var content_view;
+var liftersURL = 'http://localhost:8000/api/v1/meetdata'
+var postURL = 'http://localhost:8000/api/v1/addlifter'
 
 
 // global document variable declarations
@@ -67,7 +66,7 @@ function add_content() {
     new_content.setAttribute('id', 'meettable');
     var new_row = document.createElement('tr');
     new_content.appendChild(new_row);
-    new_content.setAttribute('id', 'header_row');
+    new_row.setAttribute('id', 'header_row');
     for (var i = 0; i < header_list.length; i++) {
         var new_headers = document.createElement('th');
         new_row.appendChild(new_headers);
@@ -80,14 +79,110 @@ function add_content() {
     fill_table();
 }
 
+function delete_table() {
+    var meettable = document.getElementById('meettable');
+    for (var i = 0; i < meettable.children; i++) {
+        meettable.children[i].remove();
+    }
+    meettable.remove();
+};
+
+function add_entry(data) {
+    var meettable = document.getElementById('meettable');
+    var new_entry = document.createElement('tr');
+    meettable.appendChild(new_entry);
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['name'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['weightclass'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['bench_1'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['bench_2'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['bench_3'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['squat_1'];
+    
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['squat_2'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['squat_3'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['deadlift_1'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['deadlift_2'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['deadlift_3'];
+
+    var new_cell = document.createElement('td');
+    new_entry.appendChild(new_cell);
+    new_cell.textContent = data['total'];
+}
+
 function fill_table() {
     //GET request to meetdata endpoint
+    fetch(liftersURL)
+    .then(response => response.json())
+    .then(data => {
+        for (var i = 0; i < data.length; i++) {
+            add_entry(data[i]);
+        };
+    });
     console.log("fill table called");
 }
 
-function add_lifter(data) {
+function jsonify(data) {
+    jsonret = {};
+    jsonret["name"] = data[0];
+    jsonret["weightclass"] = data[1];
+    jsonret["bench_1"] = data[2];
+    jsonret["bench_2"] = data[3];
+    jsonret["bench_3"] = data[4];
+    jsonret["squat_1"] = data[5];
+    jsonret["squat_2"] = data[6];
+    jsonret["squat_3"] = data[7];
+    jsonret["deadlift_1"] = data[8];
+    jsonret["deadlift_2"] = data[9];
+    jsonret["deadlift_3"] = data[10];
+    jsonret["total"] = data[11];
+
+    return jsonret
+}
+
+async function add_lifter(data) {
     //POST request to add_lifter endpoint
-    console.log("add_lifter called with this: ", data);
+    await fetch(postURL, {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonify(data))
+    });
+    delete_table();
+    add_content();
+    console.log("add_lifter called with this: ", JSON.stringify(jsonify(data)));
 }
 
 function remove_content() {
@@ -137,8 +232,10 @@ function login_false() {
     logged_in = 0;
     console.log("User ", user, " logged out");
     default_view.style.display = 'block';
-
-    remove_content();
+    login_button.value = "Log In";
+    content.style.display = 'none'
+    //remove_content();
+    delete_table();
     change_to_login();
 }
 
@@ -166,6 +263,7 @@ close_login.addEventListener('click', function() {
 
 close_x.addEventListener('click', function() {
     hide_window();
+    logged_in = 0;
     console.log("Log In Window - 'X' button pressed");
 })
 

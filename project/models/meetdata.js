@@ -34,7 +34,9 @@ exports.insertNewLift = async function insertNewLift(name,
                                                     deadlift_3,
                                                     total) {
     const db = getDbInstance()
-    const data = await new meets({name: name,
+    var connection = mongoose.connection
+    var Meets = connection.model('meet', Meets);
+    const data = await Meets.create({name: name,
                             weightclass: weightclass,
                             bench_1: bench_1,
                             bench_2: bench_2,

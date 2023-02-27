@@ -2,6 +2,7 @@ var fs = require('fs')
 var express = require('express')
 var exphbs = require('express-handlebars')
 var data = require('./meet_data.json')
+const bodyParser = require('body-parser');
 const { connectToDb } = require('./lib/mongo')
 const {
   MeetSchema,
@@ -9,8 +10,10 @@ const {
   getAllLifts
 } = require('./models/meetdata')
 
+
+
 var app = express()
-var port = process.env.PORT || 8000
+var port = 8000
 
 var names = []
 var totals = []
@@ -29,21 +32,16 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
+
 app.get('/', function (req, res, next) {
   res.status(200).sendFile(__dirname + '/public/index.html')
 })
 
 app.get('/api/v1/meetdata', async function (req, res, next) {
   const meets = await getAllLifts()
-    // if (meets) {
-    //     res.status(200).send(meets)
-    // } else {
-    //     next()
-    // }
-  console.log(typeof meets)
-  console.log(meets)
   res.status(200).send(meets);
-  //res.status(200).send(data.Lifters)
 })
 
 app.get('/api/v1/lifters', function (req, res, next) {
@@ -56,6 +54,11 @@ app.get('/api/v1/totals', function (req, res, next) {
 
 app.get('/api/v1/weightclasses', function (req, res, next) {
   res.status(200).send(weightclasses)
+})
+
+app.post('/api/v1/addlifter', async function(req, res, next) {
+  await insertNewLift(req.body['name'], req.body['weightclass'], req.body['bench_1'], req.body['bench_2'], req.body['bench_3'], req.body['squat_1'], req.body['squat_2'], req.body['squat_3'], req.body['deadlift_1'], req.body['deadlift_2'], req.body['deadlift_3'], req.body['total'])
+  res.sendStatus(201)
 })
 
 app.get('*', function (req, res, next) {
