@@ -4,10 +4,12 @@ Repo for CS 361 at OSU
 
 # How to use
 
-### 1. Make sure you have node, express, and express-handlebars installed
+cd project/
+docker-compose build --no-cache
+docker-compose up
 
-### 2. node server.js
+localhost:8000/ for web page
+localhost:/8083 for mongo UI (start mongo-express container if not already started)
 
-### 3. open localhost:8000/ in browser
 
-not much more to it
+
