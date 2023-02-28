@@ -1,8 +1,0 @@
-db.meet.insertOne({ name: "John Doe", weightclass: 93, bench_1: 200, bench_2: 210, bench_3: 220, squat_1: 300, squat_2: 310, squat_3: 320, deadlift_1: 400, deadlift_2: 410, deadlift_3: 420, total: 960 });
-use meetdata
-db.meet.find()
-use meetdata
-db.meet.find()
-db.meet.insertOne({ name: "John Doe", weightclass: 93, bench_1: 200, bench_2: 210, bench_3: 220, squat_1: 300, squat_2: 310, squat_3: 320, deadlift_1: 400, deadlift_2: 410, deadlift_3: 420, total: 960 });
-db.meet.find()
-use meetdata
