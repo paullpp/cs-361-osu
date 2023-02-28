@@ -4,6 +4,7 @@ var user = '';
 var content_view;
 var liftersURL = 'http://localhost:8000/api/v1/meetdata'
 var postURL = 'http://localhost:8000/api/v1/addlifter'
+var microURL = 'http://localhost:3000/meet/statistics'
 
 
 // global document variable declarations
@@ -33,8 +34,8 @@ var deadlift_2 = document.getElementById("deadlift-2-input");
 var deadlift_3 = document.getElementById("deadlift-3-input");
 var total = document.getElementById("total-input");
 var close_entry = document.getElementById("window-add");
+var stats = document.getElementById("stats");
 var close_x_entry = document.getElementById("entry-window-close");
-
 // functions 
 
 function change_to_logout() {
@@ -150,6 +151,7 @@ function fill_table() {
             add_entry(data[i]);
         };
     });
+    get_stats();
     console.log("fill table called");
 }
 
@@ -183,6 +185,16 @@ async function add_lifter(data) {
     delete_table();
     add_content();
     console.log("add_lifter called with this: ", JSON.stringify(jsonify(data)));
+}
+
+function get_stats() {
+    fetch(microURL)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        stats.textContent = "Name:  " + data[0].name + "  Bench AVG:  " + data[0].benchAvg + "  Squat AVG:  " + data[0].squatAvg + "  DL AVG:  " + data[0].deadliftAvg;
+    });
 }
 
 function remove_content() {
@@ -238,6 +250,8 @@ function login_false() {
     delete_table();
     change_to_login();
 }
+
+
 
 // event listeners
 
